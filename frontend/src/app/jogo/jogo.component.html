@@ -1,0 +1,94 @@
+<div class="row">
+
+  <div *ngIf="jogoSelecionado" class="col-sm-6">
+
+    <app-titulo [titulo]="(jogoSelecionado.id === 0 ? 'Novo Jogo' : 'Código: ' + jogoSelecionado.id)">
+      <button class="btn btn-sm btn-outline-danger" (click)="voltar()">Fechar</button>
+    </app-titulo>
+
+    <form [formGroup]="jogoForm" (submit)="jogoSubmit()">
+      <div class="form-group">
+        <label for="formGroupExampleInput">Data Jogo</label>
+        <input formControlName="dataJogo" type="date" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Placar</label>
+        <input formControlName="placar" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Mínimo da Temporada</label>
+        <input formControlName="minimoTemporada" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Máximo da Temporada</label>
+        <input formControlName="maximoTemporada" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Quebra Recorde Mínimo</label>
+        <input formControlName="quebraRecordeMinimo" type="text" class="form-control">
+      </div>
+      <div class="form-group">
+        <label for="formGroupExampleInput">Quebra Recorde Máximo</label>
+        <input formControlName="quebraRecordeMaximo" type="text" class="form-control">
+      </div>
+      <div class="row form-group">
+        <button class="btn btn-success" [disabled]="!jogoForm.valid">Salvar</button>
+      </div>
+    </form>
+  </div>
+
+  <br>
+
+  <div [ngClass]="{'col-sm-6': jogoSelecionado, 'col-sm-12': !jogoSelecionado}">
+    <app-titulo [titulo]="titulo">
+      <button class="btn btn-sm btn-success" (click)="novoJogo()">Cadastrar Jogo</button>
+    </app-titulo>
+    <table class="table">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Visualizar</th>
+          <th scope="col">#</th>
+          <th scope="col">Data Jogo</th>
+          <th scope="col">Placar</th>
+          <th scope="col">Mínimo da Temporada</th>
+          <th scope="col">Máximo da Temporada</th>
+          <th scope="col">Quebra Recorde Mínimo</th>
+          <th scope="col">Quebra Recorde Máximo</th>
+          <th scope="col">Opções</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jogo of jogos">
+          <td>
+            <button class="text-dark btn btn-sm btn-outline-warning"(click)="jogoSelect(jogo)">Detalhes</button>
+          </td>
+          <th scope="row">{{jogo.id}}</th>
+          <td>{{jogo.dataJogo}}</td>
+          <td>{{jogo.placar}}</td>
+          <td>{{jogo.minimoTemporada}}</td>
+          <td>{{jogo.maximoTemporada}}</td>
+          <td>{{jogo.quebraRecordeMinimo}}</td>
+          <td>{{jogo.quebraRecordeMaximo}}</td>
+          <td>
+            <div class="btn-group">
+              <button (click)="excluirJogo(jogo)" class="text-red btn btn-sm btn btn-outline-danger">Excluir</button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<ng-template #template>
+  <div class="modal-body">
+    <app-jogo></app-jogo>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn pull-right" aria-label="Close" (click)="modalRef.hide()">
+      Fechar
+    </button>
+  </div>
+</ng-template>
+
+
